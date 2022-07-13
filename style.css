@@ -1,0 +1,60 @@
+
+.mainButton{
+    display: flex;
+    height: 200px;
+    width: 200px;
+    background-color: gray;
+    border: black solid;
+    border-radius: 20px;
+    border-width: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 70px;
+    flex-shrink: 0;
+    color: white;
+    font-size: 30px;
+    font-weight: 1000;
+    transition-duration: 0.5s;
+}
+
+#container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: baseline;
+}
+
+#title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+    font-size: 80px;
+}
+
+#buttonBox{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.results{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    transition-duration: 0.5s;
+    font-size: 50px;
+    transition: color: 0.5s;
+    color: black;
+}
+
+.hideResult{
+    transition: color 0.2s;
+    color: white;
+}
+
+.buttonSelected{
+    border-color: red;
+    transition-duration: 0.2s;
+}

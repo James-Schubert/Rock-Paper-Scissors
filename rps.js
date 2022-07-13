@@ -18,45 +18,73 @@ function computerPlay(){
     return phrase;
 }
 
-
-
-function playRound(playerSelection, computerSelection){
-    let player = playerSelection.toLowerCase();
-    let computer = computerSelection.toLowerCase();
-    let responseVal;
-    if (player == computer) return(null);
-    
-    switch(player){
-        case "rock":
-            if(computer == "paper") responseVal = false;
-            else responseVal = true;
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+let myTimeout;
+function showResults(result){    
+    clearTimeout(myTimeout);
+    results.classList.remove("hideResult");
+    results.classList.add("results");
+    //results.textContent = " ";
+    sleep(500);
+    switch(result){
+        case 0:
+            results.textContent = ("You win this round!");
             break;
-        case "paper":
-            if(computer == "scissors") responseVal = false;
-            else responseVal = true;
+        case 1:
+            results.textContent = ("The computer won this round!");
             break;
-        default:
-            if(computer == "rock") responseVal = false;
-            else responseVal = true;
+        case 2:
+            results.textContent = ("It's a tie!");
             break;
     }
+    
+    myTimeout = setTimeout(function(){
+        results.classList.add("hideResult");
+        results.textContent = " ";
+        results.classList.remove("results");
+        
+        
+    }, 2000);
+    
+}
+
+function playRound(playerSelection){
+    rock.classList.remove("buttonSelected");
+    paper.classList.remove("buttonSelected");
+    scissors.classList.remove("buttonSelected");
+    if (playerSelection == "rock") rock.classList.add("buttonSelected");
+    else if (playerSelection == "paper") paper.classList.add("buttonSelected");
+    else  scissors.classList.add("buttonSelected");
+    let computerSelection = computerPlay().toLowerCase();
+    let responseVal;
+    if (playerSelection == computerSelection) responseVal = 2;
+    else{
+        switch(playerSelection){
+            case "rock":
+                if(computerSelection == "paper") responseVal = 1;
+                else responseVal = 0;
+                break;
+            case "paper":
+                if(computerSelection == "scissors") responseVal = 1;
+                else responseVal = 0;
+                break;
+            case "scissors":
+                if(computerSelection == "rock") responseVal = 1;
+                else responseVal = 0;
+                break;
+        }
+    }
+    showResults(responseVal);
     return responseVal;
 
 }
 
-
-function takeInput(){
-    let validInput = false;
-    let userInput;
-    while (!validInput){
-        userInput = prompt("Choose rock, paper, or scissors: ");
-        userInput = userInput.toLowerCase();
-        if (userInput == "rock" || userInput=="paper" || userInput=="scissors"){
-            validInput = true;
-        }
-    }
-    return userInput;
-}
 
 function game(){
     console.log("Welcome to rock, paper, scissors!\n");
@@ -86,4 +114,44 @@ function game(){
     else console.log("You suck, that computer totally pawned you");
 }
 
-game();
+
+
+//game();
+
+const container = document.querySelector("#container");
+
+const title = document.createElement("h1");
+title.setAttribute("id", "title");
+title.textContent = 'Rock Paper Scissors!';
+container.appendChild(title);
+
+const results = document.createElement('div');
+results.setAttribute("id","results");
+container.appendChild(results);
+results.classList.add("results");
+
+const buttonBox = document.createElement('div');
+buttonBox.setAttribute("id","buttonBox");
+
+
+const rock = document.createElement('div');
+rock.classList.add("mainButton");
+rock.addEventListener("click", () => playRound("rock"));
+rock.textContent = "ROCK";
+
+const paper = document.createElement('div');
+paper.classList.add("mainButton");
+paper.addEventListener("click", () => playRound("paper"));
+paper.textContent = "PAPER";
+
+const scissors = document.createElement('div');
+scissors.classList.add("mainButton");
+scissors.addEventListener("click", () => playRound("scissors"));
+scissors.textContent = "SCISSORS";
+
+buttonBox.appendChild(rock);
+buttonBox.appendChild(paper);
+buttonBox.appendChild(scissors);
+
+container.appendChild(buttonBox);
+container.appendChild(results);
